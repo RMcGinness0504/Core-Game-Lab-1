@@ -213,7 +213,7 @@ public class ShinyController : MonoBehaviour
             }
 			else if (grassR.transform.position.x >= 3.1 && !notPokemonShown)
             {
-                rand = UnityEngine.Random.Range(0, 20);
+                rand = UnityEngine.Random.Range(0, 65);
                 if (rand == 1)
                 {
                     notAPokemonNintendoPleaseDontSue.GetComponent<SpriteRenderer>().sprite = charsShiny[notPokemonHunting - 1];
@@ -266,9 +266,9 @@ public class ShinyController : MonoBehaviour
             }
             else if (Input.GetKey(KeyCode.R) && Input.GetKey(KeyCode.T))
             {
-				Array.Clear(numSeen,0,23);
-				Array.Clear(numShiny, 0, 23);
-				Array.Clear(numMissed, 0, 23);
+				Array.Clear(numSeen,0,24);
+				Array.Clear(numShiny, 0, 24);
+				Array.Clear(numMissed, 0, 24);
             }
         }
     }
