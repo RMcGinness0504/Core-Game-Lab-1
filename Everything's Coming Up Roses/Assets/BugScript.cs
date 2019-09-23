@@ -12,6 +12,9 @@ public class BugScript : MonoBehaviour
     float speedY;
     float timer = 5;
     public GameObject rose;
+    public GameObject rose2;
+    public GameObject rose3;
+    public GameObject stem;
 
     public Sprite[] parts = new Sprite[4];
     public GameObject piece;
@@ -20,20 +23,79 @@ public class BugScript : MonoBehaviour
     void Start()
     {
         rose = GameObject.FindGameObjectWithTag("rose");
+        rose2 = GameObject.FindGameObjectWithTag("rose2");
+        rose3 = GameObject.FindGameObjectWithTag("rose3");
+        stem = GameObject.FindGameObjectWithTag("stem");
 
         goalX = 0;
         goalY = 0;
 
+        if (transform.position.x > 0)
+        {
+            if (rose2.GetComponent<RoseController>().roseHealth > 0)
+            {
+                goalX = 2.7f;
+                goalY = -2;
+            } else if (rose3.GetComponent<RoseController>().roseHealth > 0)
+            {
+                goalX = -2.7f;
+                goalY = -2;
+            }
+        } else
+        {
+            if (rose3.GetComponent<RoseController>().roseHealth > 0)
+            {
+                goalX = -2.7f;
+                goalY = -2;
+            }
+            else if (rose2.GetComponent<RoseController>().roseHealth > 0)
+            {
+                goalX = 2.7f;
+                goalY = -2;
+            }
+        }
+
         speedX = goalX + transform.position.x;
         speedY = goalY + transform.position.y;
+
+        if (transform.position.x < 0)
+        {
+            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        timer -= Time.deltaTime;
+        if (goalX < -0.5f && rose3.GetComponent<RoseController>().roseHealth < 0 || goalX > 0.5f && rose2.GetComponent<RoseController>().roseHealth < 0)
+        {
+            goalX = 0;
+            goalY = 0;
+        }
 
-        this.transform.position = new Vector2(transform.position.x - (speedX/timer * Time.deltaTime), transform.position.y - (speedY/timer * Time.deltaTime));
+        if (rose.GetComponent<RoseController>().roseHealth > 0)
+        {
+            timer -= Time.deltaTime;
+
+            if (goalX > transform.position.x)
+            {
+                this.transform.position = new Vector2(transform.position.x + 3 * Time.deltaTime, transform.position.y);
+            }
+            else if(goalX < transform.position.x)
+            {
+                this.transform.position = new Vector2(transform.position.x - 3 * Time.deltaTime, transform.position.y);
+            }
+
+            if (goalY > transform.position.y)
+            {
+                this.transform.position = new Vector2(transform.position.x, transform.position.y + 3 * Time.deltaTime);
+            } else if (goalY < transform.position.y)
+            {
+                this.transform.position = new Vector2(transform.position.x, transform.position.y - 3*Time.deltaTime);
+            }
+
+
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -49,10 +111,13 @@ public class BugScript : MonoBehaviour
             {
                 rose.GetComponent<RoseController>().score += 100 + rose.GetComponent<RoseController>().combo * 50;
                 rose.GetComponent<RoseController>().combo += 1;
+                collision.gameObject.GetComponent<SeedController>().seedHealth--;
             } else
             {
+                rose.GetComponent<RoseController>().bugTimerMax = rose.GetComponent<RoseController>().bugTimerMax * 1.15f;
                 rose.GetComponent<RoseController>().combo = 0;
             }
+        stem.GetComponent<AudioSource>().Play();
         Destroy(gameObject);
         }
     }

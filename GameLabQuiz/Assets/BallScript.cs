@@ -19,6 +19,8 @@ public class BallScript : MonoBehaviour
         {
             GameObject newBall = Instantiate(ball, new Vector2(Random.Range(-6.0f, 6.0f), 3f), Quaternion.identity);
             newBall.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1);
+
+            newBall.GetComponent<AudioSource>().Play();
             mainObj.GetComponent<MainController>().score = 0;
             newBall.name = "bounce";
             Destroy(gameObject);

@@ -8,6 +8,9 @@ TagManager:
   - seed
   - rose
   - piece
+  - stem
+  - rose2
+  - rose3
   layers:
   - Default
   - TransparentFX
