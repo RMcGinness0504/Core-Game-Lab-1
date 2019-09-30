@@ -13,8 +13,9 @@ public class TitleController : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
-        Cursor.visible = true;
+	{
+		Screen.SetResolution(1440,960, false);
+		Cursor.visible = true;
     }
 
     // Update is called once per frame
