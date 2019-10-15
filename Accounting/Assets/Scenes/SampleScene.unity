@@ -1273,6 +1273,7 @@ MonoBehaviour:
   filePrefab: {fileID: 6744698140397608320, guid: c961681e619f94c259221c83cd298edc,
     type: 3}
   watchObj: {fileID: 898879822}
+  deskObj: {fileID: 1215655799}
   frozen: 1
   usedNums: 
   updatedNums: 

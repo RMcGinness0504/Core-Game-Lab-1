@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MainScript : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class MainScript : MonoBehaviour
 
     public GameObject filePrefab;
     public GameObject watchObj;
+    public GameObject deskObj;
 
     float timer = 0;
     float timerMax = 200f;
@@ -182,6 +184,8 @@ public class MainScript : MonoBehaviour
     void Start()
     {
         startDay();
+
+        Screen.SetResolution(1024,768, false);
     }
 
     // Update is called once per frame
@@ -197,6 +201,11 @@ public class MainScript : MonoBehaviour
                     strikes--;
                     filesLeft--;
                     Destroy(strikeObjects[strikes]);
+                    if (strikes <= 0)
+                    {
+                        deskObj.GetComponent<AudioSource>().Stop();
+                        SceneManager.LoadScene("lose", LoadSceneMode.Single);
+                    }
                 }
             }
             watchObj.transform.eulerAngles = new Vector3(0,0,timer/timerMax * 360);
@@ -210,10 +219,15 @@ public class MainScript : MonoBehaviour
             GetComponents<AudioSource>()[0].Play();
         } else
         {
-            if (day > 1 && !frozen)
+            if (day > 1 && !frozen || day > 2)
             {
                 strikes--;
                 Destroy(strikeObjects[strikes]);
+                if (strikes <= 0)
+                {
+                    deskObj.GetComponent<AudioSource>().Stop();
+                    SceneManager.LoadScene("lose", LoadSceneMode.Single);
+                }
             }
             GetComponents<AudioSource>()[1].Play();
         }
