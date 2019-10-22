@@ -85,6 +85,10 @@ public class GameControllerScript : MonoBehaviour
             }
         } else
         {
+            if (alpha < 0.95 && alpha > 0.8)
+            {
+                updateUI();
+            }
             alpha -= 0.5f * Time.deltaTime;
             if (alpha <= 0)
             {
@@ -102,7 +106,7 @@ public class GameControllerScript : MonoBehaviour
             birdTimer -= Time.deltaTime;
             if (birdTimer <= 0 && birdsMade < birdsMax)
             {
-                birdTimer += birdTimerMax;
+                birdTimer = birdTimerMax;
                 birdsMade++;
                 Instantiate(natuPrefab, new Vector3(Random.Range(-1f, 1f), 3.75f, 0), Quaternion.identity);
             }
