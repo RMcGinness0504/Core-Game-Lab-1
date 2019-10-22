@@ -44,6 +44,7 @@ public class GameControllerScript : MonoBehaviour
     {
         GameObject textObject = GameObject.Find("numberSaved");
         textObject.GetComponent<Text>().text = "" + savedBirds + " / " + birdsMax;
+
         for (int i = 0;i < birdsKilled && i < 5;i++)
         {
             GameObject lifeObject = GameObject.Find("lives" + i);
@@ -79,6 +80,7 @@ public class GameControllerScript : MonoBehaviour
                     fadingOut = false;
                     savedBirds = 0;
                     SceneManager.LoadScene("Scene" + scene, LoadSceneMode.Single);
+                    updateUI();
                 }
             }
         } else

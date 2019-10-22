@@ -13,6 +13,7 @@ public class titleControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Screen.SetResolution(1024,768, false);
         sr = GetComponent<SpriteRenderer>();
     }
 
@@ -37,7 +38,7 @@ public class titleControl : MonoBehaviour
 
         sr.color = new Color(0, 0, 0, alpha);
 
-        if (Input.anyKeyDown)
+        if (Input.anyKeyDown && alpha <= 0)
         {
             fadingOut = true;
         }
